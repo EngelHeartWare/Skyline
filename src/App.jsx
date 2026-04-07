@@ -50,6 +50,7 @@ export default function App() {
   const [expandedCity, setExpandedCity] = useState(null);
   const [favs, setFavs] = useState(loadFavs);
   const [showFavsOnly, setShowFavsOnly] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => { setTimeout(() => setReady(true), 60); }, []);
@@ -144,6 +145,7 @@ export default function App() {
   }), [filtered]);
 
   const imgCount = Object.keys(images).length;
+  const activeFilterCount = (decade !== "All" ? 1 : 0) + (use !== "All" ? 1 : 0) + (region !== "All" ? 1 : 0) + (showUC ? 1 : 0) + (showPlanned ? 1 : 0) + (showFavsOnly ? 1 : 0);
 
   // ── DETAIL PAGE (full screen) ──
   if (detailBuilding) {
@@ -151,7 +153,7 @@ export default function App() {
       <div style={{ minHeight: "100vh", background: t.bg, fontFamily: "'DM Sans','Segoe UI',sans-serif", color: t.text }}>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
         <style>{`@keyframes fi{from{opacity:0}to{opacity:1}}`}</style>
-        <div style={{ maxWidth: 520, margin: "0 auto", padding: "14px 12px 32px" }}>
+        <div style={{ maxWidth: 580, margin: "0 auto", padding: "32px 20px 48px" }}>
           <DetailPage building={detailBuilding} allBuildings={allBuildings} image={images[detailBuilding.id]}
             extract={extracts[detailBuilding.id]} isFav={favs.includes(detailBuilding.id)}
             onToggleFav={() => toggleFav(detailBuilding.id)} onClose={() => setDetailId(null)}
@@ -185,14 +187,14 @@ export default function App() {
         .vb{padding:5px 9px;border-radius:6px;border:1px solid ${t.pillBorder};background:transparent;color:${t.textMuted};font-size:10px;cursor:pointer;font-family:inherit;transition:all .15s}
         .vb:hover{background:${t.surfaceHover};color:${t.text}}.vb.a{background:${t.accentBg};border-color:${t.accentBorder};color:${t.accent}}
         .lr{display:grid;grid-template-columns:36px 2fr 1.2fr 56px 30px 30px 22px;gap:2px;padding:6px 8px;border-bottom:1px solid ${t.border};align-items:center;cursor:pointer;transition:background .1s;font-size:11px}.lr:hover{background:${t.surfaceHover}}
-        .cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px}
+        .cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px}
         .float-panel{position:fixed;top:10px;right:10px;width:320px;max-height:calc(100vh - 20px);overflow-y:auto;z-index:50;border-radius:14px;animation:slideIn .25s ease}
         @media(max-width:700px){.float-panel{position:fixed;bottom:0;right:0;left:0;top:auto;width:100%;max-height:55vh;border-radius:14px 14px 0 0}}
       `}</style>
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 860, margin: "0 auto", padding: "14px 12px 28px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1100, margin: "0 auto", padding: "32px 24px 48px" }}>
         {/* Header */}
-        <div style={{ animation: ready ? "su .4s ease" : "none", opacity: ready ? 1 : 0, marginBottom: 10 }}>
+        <div style={{ animation: ready ? "su .4s ease" : "none", opacity: ready ? 1 : 0, marginBottom: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: 26, fontWeight: 900, color: t.textStrong, letterSpacing: "-.3px" }}>SKYLINE</h1>
             <span style={{ fontSize: 9, color: t.textFaint, letterSpacing: 4, textTransform: "uppercase", fontWeight: 300 }}>explorer</span>
@@ -208,52 +210,73 @@ export default function App() {
         </div>
 
         {/* Controls */}
-        <div style={{ animation: ready ? "su .4s ease .04s both" : "none", display: "flex", flexDirection: "column", gap: 5, marginBottom: 10 }}>
-          <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
+        <div style={{ animation: ready ? "su .4s ease .04s both" : "none", display: "flex", flexDirection: "column", gap: 8, marginBottom: 18 }}>
+          {/* Primary bar: Search + Sort + More Filters + Views */}
+          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
             <div style={{ position: "relative" }}>
-              <svg style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", opacity: 0.25 }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={t.textMuted} strokeWidth="2.5"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+              <svg style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", opacity: 0.35 }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={t.textMuted} strokeWidth="2.5"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
               <input className="si" placeholder='Search (or press "/")' value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
+            <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
+              <span style={{ fontSize: 9, color: t.textMuted, marginRight: 2 }}>Sort:</span>
+              {[["height", "Tallest"], ["floors", "Floors"], ["year", "Oldest"], ["name", "A–Z"]].map(([k, l]) => (
+                <button key={k} className={`p ${sortBy === k ? "a" : ""}`} onClick={() => setSortBy(k)}>{l}</button>
+              ))}
+            </div>
+            <button className="p" onClick={() => setFiltersOpen(!filtersOpen)}
+              style={{ display: "flex", alignItems: "center", gap: 4, borderColor: filtersOpen || activeFilterCount > 0 ? t.accentBorder : undefined, color: filtersOpen || activeFilterCount > 0 ? t.accent : undefined, background: filtersOpen || activeFilterCount > 0 ? t.accentBg : undefined }}>
+              <span style={{ fontSize: 11 }}>▾</span> Filters {activeFilterCount > 0 && <span style={{ background: t.accent, color: mode === "dark" ? "#0c1220" : "#fff", fontSize: 8, fontWeight: 700, borderRadius: 8, padding: "0 5px", lineHeight: "15px" }}>{activeFilterCount}</span>}
+            </button>
+            <button className={`p ${showFavsOnly ? "a" : ""}`}
+              style={{ borderColor: showFavsOnly ? `${t.fav}55` : undefined, color: showFavsOnly ? t.fav : undefined, background: showFavsOnly ? t.favBg : undefined }}
+              onClick={() => setShowFavsOnly(!showFavsOnly)}>♥ {showFavsOnly ? `Fav (${favs.length})` : favs.length || "Favs"}</button>
+            <button className={`p ${compareMode ? "a" : ""}`}
+              style={{ borderColor: compareMode ? `${t.compare}55` : undefined, color: compareMode ? t.compare : undefined, background: compareMode ? t.compareBg : undefined }}
+              onClick={() => { setCompareMode(!compareMode); if (compareMode) setCompareIds([]); }}>
+              {compareMode ? `⚖ ${compareIds.length}` : "⚖ Compare"}</button>
             <div style={{ display: "flex", gap: 3, marginLeft: "auto" }}>
               {[["skyline", "▌▐▌"], ["cards", "▦"], ["map", "◎"], ["list", "≡"]].map(([v, ic]) => (
                 <button key={v} className={`vb ${view === v ? "a" : ""}`} onClick={() => setView(v)}>{ic} {v[0].toUpperCase() + v.slice(1)}</button>
               ))}
             </div>
           </div>
-          <div style={{ display: "flex", gap: 3, flexWrap: "wrap", alignItems: "center" }}>
-            <span style={{ fontSize: 8, color: t.textGhost }}>ERA</span>
-            {DECADES.map((d) => <button key={d} className={`p ${decade === d ? "a" : ""}`} onClick={() => setDecade(d)}>{d}</button>)}
-            <span style={{ fontSize: 8, color: t.textGhost, marginLeft: 3 }}>USE</span>
-            {USES.map((u) => <button key={u} className={`p ${use === u ? "a" : ""}`} onClick={() => setUse(u)}>{u}</button>)}
-          </div>
-          <div style={{ display: "flex", gap: 3, flexWrap: "wrap", alignItems: "center" }}>
-            <span style={{ fontSize: 8, color: t.textGhost }}>REGION</span>
-            {REGIONS.map((r) => <button key={r} className={`p ${region === r ? "a" : ""}`} onClick={() => setRegion(r)}>{r}</button>)}
-            <span style={{ fontSize: 8, color: t.textGhost, marginLeft: 3 }}>INCLUDE</span>
-            <button className={`p ${showUC ? "a" : ""}`}
-              style={{ borderColor: showUC ? "rgba(255,180,100,.3)" : undefined, color: showUC ? "#ffcc88" : undefined, background: showUC ? "rgba(255,180,100,.06)" : undefined }}
-              onClick={() => setShowUC(!showUC)}>⚒ Under Construction {unfinishedCounts.uc > 0 && `(${unfinishedCounts.uc})`}</button>
-            <button className={`p ${showPlanned ? "a" : ""}`}
-              style={{ borderColor: showPlanned ? "rgba(160,160,255,.3)" : undefined, color: showPlanned ? "#aab0ff" : undefined, background: showPlanned ? "rgba(160,160,255,.06)" : undefined }}
-              onClick={() => setShowPlanned(!showPlanned)}>📐 Planned {unfinishedCounts.pl > 0 && `(${unfinishedCounts.pl})`}</button>
-          </div>
-          <div style={{ display: "flex", gap: 3, flexWrap: "wrap", alignItems: "center" }}>
-            <span style={{ fontSize: 8, color: t.textGhost }}>SORT</span>
-            {[["height", "Tallest"], ["floors", "Floors"], ["year", "Oldest"], ["name", "A–Z"]].map(([k, l]) => (
-              <button key={k} className={`p ${sortBy === k ? "a" : ""}`} onClick={() => setSortBy(k)}>{l}</button>
-            ))}
-            <button className={`p ${showFavsOnly ? "a" : ""}`}
-              style={{ borderColor: showFavsOnly ? `${t.fav}55` : undefined, color: showFavsOnly ? t.fav : undefined, background: showFavsOnly ? t.favBg : undefined }}
-              onClick={() => setShowFavsOnly(!showFavsOnly)}>♥ {showFavsOnly ? `Fav (${favs.length})` : favs.length || "Favs"}</button>
-            <button className={`p ${compareMode ? "a" : ""}`}
-              style={{ marginLeft: "auto", borderColor: compareMode ? `${t.compare}55` : undefined, color: compareMode ? t.compare : undefined, background: compareMode ? t.compareBg : undefined }}
-              onClick={() => { setCompareMode(!compareMode); if (compareMode) setCompareIds([]); }}>
-              {compareMode ? `⚖ ${compareIds.length}` : "⚖ Compare"}</button>
-          </div>
+
+          {/* Collapsible filters panel */}
+          {filtersOpen && (
+            <div style={{ background: t.surface, border: `1px solid ${t.border}`, borderRadius: 10, padding: "10px 14px", display: "flex", flexDirection: "column", gap: 7, animation: "fi .15s ease" }}>
+              <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
+                <span style={{ fontSize: 9, color: t.textMuted, width: 50, flexShrink: 0 }}>Era</span>
+                {DECADES.map((d) => <button key={d} className={`p ${decade === d ? "a" : ""}`} onClick={() => setDecade(d)}>{d}</button>)}
+              </div>
+              <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
+                <span style={{ fontSize: 9, color: t.textMuted, width: 50, flexShrink: 0 }}>Use</span>
+                {USES.map((u) => <button key={u} className={`p ${use === u ? "a" : ""}`} onClick={() => setUse(u)}>{u}</button>)}
+              </div>
+              <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
+                <span style={{ fontSize: 9, color: t.textMuted, width: 50, flexShrink: 0 }}>Region</span>
+                {REGIONS.map((r) => <button key={r} className={`p ${region === r ? "a" : ""}`} onClick={() => setRegion(r)}>{r}</button>)}
+              </div>
+              <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
+                <span style={{ fontSize: 9, color: t.textMuted, width: 50, flexShrink: 0 }}>Include</span>
+                <button className={`p ${showUC ? "a" : ""}`}
+                  style={{ borderColor: showUC ? "rgba(255,180,100,.3)" : undefined, color: showUC ? "#ffcc88" : undefined, background: showUC ? "rgba(255,180,100,.08)" : undefined }}
+                  onClick={() => setShowUC(!showUC)}>⚒ Under Construction {unfinishedCounts.uc > 0 && `(${unfinishedCounts.uc})`}</button>
+                <button className={`p ${showPlanned ? "a" : ""}`}
+                  style={{ borderColor: showPlanned ? "rgba(160,160,255,.3)" : undefined, color: showPlanned ? "#aab0ff" : undefined, background: showPlanned ? "rgba(160,160,255,.08)" : undefined }}
+                  onClick={() => setShowPlanned(!showPlanned)}>📐 Planned {unfinishedCounts.pl > 0 && `(${unfinishedCounts.pl})`}</button>
+              </div>
+              {activeFilterCount > 0 && (
+                <button onClick={() => { setDecade("All"); setUse("All"); setRegion("All"); setShowUC(false); setShowPlanned(false); setShowFavsOnly(false); }}
+                  style={{ alignSelf: "flex-start", background: "none", border: "none", color: t.accent, fontSize: 10, cursor: "pointer", fontFamily: "inherit", padding: "2px 0" }}>
+                  Clear all filters
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Keyboard hint */}
-        <div style={{ fontSize: 8, color: t.textGhost, marginBottom: 8 }}>
+        <div style={{ fontSize: 8.5, color: t.textGhost, marginBottom: 14 }}>
           ← → navigate · Enter open · Esc back · F favorite · / search
         </div>
 
@@ -321,7 +344,7 @@ export default function App() {
 
         {/* SKYLINE */}
         {view === "skyline" && (
-          <div style={{ animation: ready ? "su .4s ease .08s both" : "none", display: "flex", alignItems: "flex-end", gap: 1.5, overflowX: "auto", paddingBottom: 4, minHeight: 230, borderBottom: `1px solid ${t.border}` }}>
+          <div style={{ animation: ready ? "su .4s ease .08s both" : "none", display: "flex", alignItems: "flex-end", gap: 2, overflowX: "auto", paddingBottom: 8, minHeight: 280, borderBottom: `1px solid ${t.border}` }}>
             {filtered.map((s) => (
               <div key={s.id} className="tc" onClick={() => handleSelect(s.id)} onDoubleClick={() => openDetail(s.id)}
                 style={{ opacity: compareMode && !compareIds.includes(s.id) ? .3 : s.status !== "completed" ? .5 : 1, position: "relative" }}>
@@ -403,7 +426,7 @@ export default function App() {
           </div>
         )}
 
-        <div style={{ marginTop: 14, fontSize: 8, color: t.textGhost, textAlign: "center", lineHeight: 1.7 }}>
+        <div style={{ marginTop: 28, fontSize: 8.5, color: t.textGhost, textAlign: "center", lineHeight: 1.7 }}>
           {wd.error && <span>Wikidata unavailable — showing fallback · </span>}
           Data: Wikidata ({allBuildings.length}) + custom · Images: Wikipedia · 🏆 = tallest when completed · v0.7
         </div>
