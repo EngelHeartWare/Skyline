@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/Skyline/', // <-- REPLACE 'Skyline' WITH YOUR ACTUAL REPO NAME
+  base: '/', // <-- Changed fro Netlify
 })
