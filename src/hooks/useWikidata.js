@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { assignColor } from "../data/buildings";
 
-// Query 1: the original proven skyscraper query (wd:Q11303)
-// Height >= 150m — this always worked and returns ~100-200 results reliably.
 const SPARQL_SKYSCRAPERS = `
 SELECT DISTINCT ?building ?buildingLabel ?height ?floors ?inception
   ?lat ?lng ?countryLabel ?cityLabel ?architectLabel ?article
@@ -25,10 +23,6 @@ WHERE {
 } ORDER BY DESC(?height) LIMIT 300
 `;
 
-// Query 2: broader building types that Wikidata doesn't tag as "skyscraper"
-// Direct P31 only — no transitive subclass walk — fast
-// Catches European buildings tagged as high-rise, residential skyscraper,
-// tower block, supertall, or even just "building"
 const SPARQL_HIGHRISE = `
 SELECT DISTINCT ?building ?buildingLabel ?height ?floors ?inception
   ?lat ?lng ?countryLabel ?cityLabel ?architectLabel ?article
@@ -108,11 +102,16 @@ function buildingsFromRows(seen, startIndex) {
 }
 
 async function runQuery(sparql, signal) {
-  const res = await fetch(
-    `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(sparql)}`,
-    { headers: { Accept: "application/sparql-results+json" }, signal }
-  );
+  // Look how clean this is! We just ask our own /api route.
+  // In dev, Vite handles the proxy. In prod, Netlify handles it.
+  const res = await fetch(`/api/wikidata?format=json&query=${encodeURIComponent(sparql)}`, { 
+    method: "GET",
+    headers: { "Accept": "application/sparql-results+json" }, 
+    signal 
+  });
+  
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  
   const data = await res.json();
   return data?.results?.bindings || [];
 }
@@ -129,51 +128,38 @@ export function useWikidata() {
       let allResults = [];
       let hadError = null;
 
-      // ── Query 1: skyscrapers (proven, must-succeed) ──
       try {
-        console.log("[Skyline] Query 1: fetching skyscrapers (Q11303, ≥150m)...");
-        const timer1 = setTimeout(() => ctrl.abort(), 25000);
+        const timer1 = setTimeout(() => ctrl.abort(), 60000);
         const rows1 = await runQuery(SPARQL_SKYSCRAPERS, ctrl.signal);
         clearTimeout(timer1);
-        console.log("[Skyline] Query 1: got", rows1.length, "raw rows");
         const seen1 = parseRows(rows1);
         allResults = buildingsFromRows(seen1, 0);
-        console.log("[Skyline] Query 1: parsed into", allResults.length, "unique buildings");
         allResults.sort((a, b) => b.height - a.height);
         setBuildings([...allResults]);
       } catch (e) {
         hadError = e.name === "AbortError" ? "Wikidata timed out" : e.message;
-        console.error("[Skyline] Query 1 FAILED:", hadError);
+        console.error("🔥🔥🔥 WIKIDATA CRASH REPORT 🔥🔥🔥");
+        console.error("Error Message:", e.message);
+        console.error("Error Name:", e.name);
       }
 
-      // ── Query 2: broader building types (bonus, can fail gracefully) ──
       if (!ctrl.signal.aborted) {
         try {
-          console.log("[Skyline] Query 2: fetching high-rise/tower-block/supertall...");
           const ctrl2 = new AbortController();
-          const timer2 = setTimeout(() => ctrl2.abort(), 20000);
+          const timer2 = setTimeout(() => ctrl2.abort(), 60000);
           const rows2 = await runQuery(SPARQL_HIGHRISE, ctrl2.signal);
           clearTimeout(timer2);
-          console.log("[Skyline] Query 2: got", rows2.length, "raw rows");
           const seen2 = parseRows(rows2);
           const extra = buildingsFromRows(seen2, allResults.length);
-          console.log("[Skyline] Query 2: parsed into", extra.length, "buildings");
 
-          // Merge: add buildings not already in the set
           const existingIds = new Set(allResults.map(b => b.id));
           const newOnes = extra.filter(b => !existingIds.has(b.id));
-          console.log("[Skyline] Query 2: merging", newOnes.length, "new buildings (", extra.length - newOnes.length, "duplicates skipped)");
           if (newOnes.length > 0) {
             allResults = [...allResults, ...newOnes];
             allResults.sort((a, b) => b.height - a.height);
             setBuildings([...allResults]);
           }
-          console.log("[Skyline] Total:", allResults.length, "buildings");
-        } catch (e2) {
-          console.warn("[Skyline] Query 2 failed (non-critical):", e2.message);
-        }
-      } else {
-        console.warn("[Skyline] Query 2 skipped — Query 1 aborted the controller");
+        } catch (e2) {}
       }
 
       if (hadError && allResults.length === 0) setError(hadError);

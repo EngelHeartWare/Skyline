@@ -1,0 +1,11 @@
+[[redirects]]
+  from = "/api/wikidata/*"
+  to = "https://query.wikidata.org/sparql/:splat"
+  status = 200
+  force = true
+
+# This second rule is required for React Router to work properly on Netlify!
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

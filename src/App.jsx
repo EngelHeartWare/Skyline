@@ -4,7 +4,7 @@ import Auth from "./Auth";
 import { FALLBACK_BUILDINGS, DECADES, USES, REGIONS, getRegion, getDecade, getStatusLabel, computeTallestBadges, assignColor } from "./data/buildings";
 import { CUSTOM_BUILDINGS } from "./data/custom-buildings";
 import { useWikidata } from "./hooks/useWikidata";
-import { useWikiData } from "./hooks/useWikiImages";
+import { useWikiImages } from './hooks/useWikiImages'; 
 import { useTheme } from "./hooks/useTheme";
 import Tower from "./components/Tower";
 import Thumb from "./components/Thumb";
@@ -80,7 +80,7 @@ export default function App() {
   const allBuildings = useMemo(() => mergeCustom(wd.buildings), [wd.buildings]);
   const maxH = useMemo(() => Math.max(...allBuildings.map((b) => b.height), 1000), [allBuildings]);
   const tallestBadges = useMemo(() => computeTallestBadges(allBuildings), [allBuildings]);
-  const { images, extracts } = useWikiData(allBuildings);
+  const { images, extracts } = useWikiImages(allBuildings); // <--- FIXED
 
   // ── AUTHENTICATION & SYNC STATE ──
   const [sessionUser, setSessionUser] = useState(null);
