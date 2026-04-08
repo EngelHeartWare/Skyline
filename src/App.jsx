@@ -11,6 +11,9 @@ import Thumb from "./components/Thumb";
 import WorldMap from "./components/WorldMap";
 import CompareView from "./components/CompareView";
 import DetailPage from "./components/DetailPage";
+import LegalPage from "./components/LegalPages";
+import Leaderboard from "./components/Leaderboard";
+import { useLeaderboard } from "./hooks/useLeaderboard";
 
 function loadFavs() { try { return JSON.parse(localStorage.getItem("skyline_favs") || "[]"); } catch { return []; } }
 function loadVisited() { try { return JSON.parse(localStorage.getItem("skyline_visited") || "[]"); } catch { return []; } }
@@ -73,6 +76,7 @@ function locWithFlag(b) { const flag = getFlag(b.country); return (flag ? flag +
 export default function App() {
   const { t, mode, toggle: toggleTheme } = useTheme();
   const wd = useWikidata();
+  const lb = useLeaderboard();
   const allBuildings = useMemo(() => mergeCustom(wd.buildings), [wd.buildings]);
   const maxH = useMemo(() => Math.max(...allBuildings.map((b) => b.height), 1000), [allBuildings]);
   const tallestBadges = useMemo(() => computeTallestBadges(allBuildings), [allBuildings]);
@@ -106,6 +110,7 @@ export default function App() {
   const [hoveredTower, setHoveredTower] = useState(null);
   const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
   const [ready, setReady] = useState(false);
+  const [legalPage, setLegalPage] = useState(null); // "impressum" | "datenschutz" | null
 
   useEffect(() => { setTimeout(() => setReady(true), 60); }, []);
 
@@ -466,7 +471,7 @@ const toggleVisited = useCallback((id) => {
               onClick={() => { setCompareMode(!compareMode); if (compareMode) setCompareIds([]); }}>
               {compareMode ? `⚖ ${compareIds.length}` : "⚖ Compare"}</button>
             <div style={{ display: "flex", gap: 3, marginLeft: "auto" }}>
-              {[["skyline", "▌▐▌"], ["cards", "▦"], ["map", "◎"], ["list", "≡"]].map(([v, ic]) => (
+              {[["skyline", "▌▐▌"], ["cards", "▦"], ["map", "◎"], ["list", "≡"], ["ranks", "🏆"]].map(([v, ic]) => (
                 <button key={v} className={`vb ${view === v ? "a" : ""}`} onClick={() => setView(v)}>{ic} {v[0].toUpperCase() + v.slice(1)}</button>
               ))}
             </div>
@@ -754,6 +759,16 @@ const toggleVisited = useCallback((id) => {
           </div>
         )}
 
+        {/* LEADERBOARD */}
+        {view === "ranks" && (
+          <Leaderboard
+            data={lb.data} loading={lb.loading} error={lb.error} onRefresh={lb.refresh}
+            allBuildings={allBuildings} images={images} maxH={maxH}
+            onSelect={handleSelect} onOpenDetail={openDetail}
+            favs={favs} visited={visited} wishlist={wishlist}
+          />
+        )}
+
         {/* Export/Import user data */}
         {(visited.length > 0 || wishlist.length > 0 || favs.length > 0) && (
           <div style={{ marginTop: 20, display: "flex", gap: 8, justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
@@ -775,7 +790,18 @@ const toggleVisited = useCallback((id) => {
           {wd.error && <span>Wikidata unavailable — showing fallback · </span>}
           Data: Wikidata ({allBuildings.length}) + custom · Images: Wikipedia · 🏆 = tallest when completed · v0.8
         </div>
+
+        {/* Footer */}
+        <footer style={{ marginTop: 24, paddingTop: 16, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "center", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+          <button onClick={() => setLegalPage("impressum")} style={{ background: "none", border: "none", color: t.textFaint, cursor: "pointer", fontSize: 10, fontFamily: "inherit", textDecoration: "underline", textUnderlineOffset: 2 }}>Impressum</button>
+          <span style={{ color: t.textGhost, fontSize: 10 }}>·</span>
+          <button onClick={() => setLegalPage("datenschutz")} style={{ background: "none", border: "none", color: t.textFaint, cursor: "pointer", fontSize: 10, fontFamily: "inherit", textDecoration: "underline", textUnderlineOffset: 2 }}>Datenschutz</button>
+          <span style={{ color: t.textGhost, fontSize: 10 }}>·</span>
+          <span style={{ fontSize: 10, color: t.textGhost }}>© {new Date().getFullYear()} EngelHeartWare</span>
+        </footer>
       </div>
+
+      {legalPage && <LegalPage page={legalPage} onClose={() => setLegalPage(null)} />}
     </div>
   );
 }

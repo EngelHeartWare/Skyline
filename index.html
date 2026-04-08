@@ -3,9 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Explore the world's tallest skyscrapers — heights, photos, maps, and comparisons." />
-    <title>Skyline Explorer</title>
+
+    <!-- Primary Meta -->
+    <title>Skyline Explorer — Discover the World's Tallest Skyscrapers</title>
+    <meta name="description" content="Explore 300+ skyscrapers worldwide — compare heights, track buildings you've visited, create wishlists, and discover skylines across every continent." />
+    <meta name="keywords" content="skyscrapers, tall buildings, skyline, architecture, Burj Khalifa, skyscraper database, building comparison, world tallest buildings" />
+    <meta name="author" content="EngelHeartWare" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://skyline-explorer.netlify.app/" />
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Skyline Explorer — Discover the World's Tallest Skyscrapers" />
+    <meta property="og:description" content="Explore 300+ skyscrapers worldwide — compare heights, track buildings you've visited, create wishlists, and discover skylines across every continent." />
+    <meta property="og:url" content="https://skyline-explorer.netlify.app/" />
+    <meta property="og:site_name" content="Skyline Explorer" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Skyline Explorer — Discover the World's Tallest Skyscrapers" />
+    <meta name="twitter:description" content="Explore 300+ skyscrapers worldwide — compare heights, track visits, create wishlists." />
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Skyline Explorer",
+      "description": "Interactive database of the world's tallest skyscrapers with comparisons, maps, and personal tracking.",
+      "url": "https://skyline-explorer.netlify.app/",
+      "applicationCategory": "ReferenceApplication",
+      "operatingSystem": "Web",
+      "author": {
+        "@type": "Organization",
+        "name": "EngelHeartWare"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      }
+    }
+    </script>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='12' y='2' width='8' height='28' rx='1' fill='%236688aa'/><rect x='4' y='10' width='7' height='20' rx='1' fill='%23445566'/><rect x='21' y='8' width='7' height='22' rx='1' fill='%23556677'/></svg>" />
+
+    <!-- Preconnect to external APIs -->
+    <link rel="preconnect" href="https://query.wikidata.org" />
+    <link rel="preconnect" href="https://en.wikipedia.org" />
+    <link rel="dns-prefetch" href="https://query.wikidata.org" />
+    <link rel="dns-prefetch" href="https://en.wikipedia.org" />
   </head>
   <body>
     <div id="root"></div>
