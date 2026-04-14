@@ -49,6 +49,30 @@ WHERE {
 } ORDER BY DESC(?height) LIMIT 300
 `;
 
+// Query 3 — European buildings ≥120m (catches towers the global queries miss)
+const SPARQL_EUROPE = `
+SELECT DISTINCT ?building ?buildingLabel ?height ?floors ?inception
+  ?lat ?lng ?countryLabel ?cityLabel ?architectLabel ?article
+WHERE {
+  ?building wdt:P31/wdt:P279* wd:Q11303 .
+  ?building p:P2048 ?heightStmt .
+  ?heightStmt psv:P2048 ?heightValue .
+  ?heightValue wikibase:quantityAmount ?height .
+  ?heightValue wikibase:quantityUnit wd:Q11573 .
+  FILTER(?height >= 120 && ?height <= 1100)
+  ?building wdt:P17 ?country .
+  ?country wdt:P30 wd:Q46 .
+  FILTER NOT EXISTS { ?building wdt:P576 ?dissolved }
+  OPTIONAL { ?building wdt:P571 ?inception }
+  OPTIONAL { ?building wdt:P1101 ?floors }
+  OPTIONAL { ?building p:P625/ps:P625 ?coord . BIND(geof:latitude(?coord) AS ?lat) BIND(geof:longitude(?coord) AS ?lng) }
+  OPTIONAL { ?building wdt:P131 ?city }
+  OPTIONAL { ?building wdt:P84 ?architect }
+  OPTIONAL { ?article schema:about ?building ; schema:isPartOf <https://en.wikipedia.org/> }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+} ORDER BY DESC(?height) LIMIT 200
+`;
+
 const HEIGHT_FIX = { Q9188:443.2, Q131013:442.1, Q36524:318.9, Q12495:828, Q836602:508, Q158477:541.3 };
 
 function parseYear(v) { if (!v) return null; const m = String(v).match(/(\d{4})/); return m ? parseInt(m[1]) : null; }
@@ -102,33 +126,13 @@ function buildingsFromRows(seen, startIndex) {
 }
 
 async function runQuery(sparql, signal) {
-  const params = `format=json&query=${encodeURIComponent(sparql)}`;
-
-  // Try Netlify proxy first, fall back to direct CORS fetch
-  const urls = [
-    `/api/wikidata?${params}`,
-    `https://query.wikidata.org/sparql?${params}`,
-  ];
-
-  for (const url of urls) {
-    try {
-      const res = await fetch(url, {
-        headers: { Accept: "application/sparql-results+json" },
-        signal,
-      });
-      const ct = res.headers.get("content-type") || "";
-      if (!res.ok || !ct.toLowerCase().includes("json")) {
-        console.warn(`[Skyline] ${url.slice(0, 40)}... returned ${res.status} (${ct}), trying next`);
-        continue;
-      }
-      const data = await res.json();
-      return data?.results?.bindings || [];
-    } catch (e) {
-      if (e.name === "AbortError") throw e; // propagate timeouts
-      console.warn(`[Skyline] ${url.slice(0, 40)}... failed: ${e.message}, trying next`);
-    }
-  }
-  throw new Error("All Wikidata endpoints failed");
+  const res = await fetch(
+    `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(sparql)}`,
+    { headers: { Accept: "application/sparql-results+json" }, signal }
+  );
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  return data?.results?.bindings || [];
 }
 
 export function useWikidata() {
@@ -175,6 +179,26 @@ export function useWikidata() {
             setBuildings([...allResults]);
           }
         } catch (e2) {}
+      }
+
+      // Query 3 — European focus (lower height threshold, catches more EU towers)
+      if (!ctrl.signal.aborted) {
+        try {
+          const ctrl3 = new AbortController();
+          const timer3 = setTimeout(() => ctrl3.abort(), 60000);
+          const rows3 = await runQuery(SPARQL_EUROPE, ctrl3.signal);
+          clearTimeout(timer3);
+          const seen3 = parseRows(rows3);
+          const euroExtra = buildingsFromRows(seen3, allResults.length);
+
+          const existingIds = new Set(allResults.map(b => b.id));
+          const newEuro = euroExtra.filter(b => !existingIds.has(b.id));
+          if (newEuro.length > 0) {
+            allResults = [...allResults, ...newEuro];
+            allResults.sort((a, b) => b.height - a.height);
+            setBuildings([...allResults]);
+          }
+        } catch (e3) {}
       }
 
       if (hadError && allResults.length === 0) setError(hadError);

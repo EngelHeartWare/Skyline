@@ -403,16 +403,24 @@ const toggleVisited = useCallback((id) => {
         .p:hover{background:${t.pillHover};color:${t.text}}.p.a{background:${t.accentBg};border-color:${t.accentBorder};color:${t.accent}}
         .tc{cursor:pointer;transition:transform .15s;display:flex;flex-direction:column;align-items:center}.tc:hover{transform:translateY(-3px)}
         .si{background:${t.inputBg};border:1px solid ${t.inputBorder};border-radius:7px;padding:7px 10px 7px 26px;color:${t.text};font-size:12px;outline:none;width:100%;max-width:210px;font-family:inherit}
+        @media(max-width:700px){
+          .si{max-width:140px;font-size:11px;padding:6px 8px 6px 24px}
+          .p{font-size:9.5px;padding:3px 8px}
+          .vb{font-size:9px;padding:4px 7px}
+        }
         .si::placeholder{color:${t.textFaint}}.si:focus{border-color:${t.accentBorder};background:${t.surfaceHover}}
         .vb{padding:5px 9px;border-radius:6px;border:1px solid ${t.pillBorder};background:transparent;color:${t.textMuted};font-size:10px;cursor:pointer;font-family:inherit;transition:all .15s}
         .vb:hover{background:${t.surfaceHover};color:${t.text}}.vb.a{background:${t.accentBg};border-color:${t.accentBorder};color:${t.accent}}
-        .lr{display:grid;grid-template-columns:36px 2fr 1.2fr 56px 30px 30px 22px 22px;gap:2px;padding:6px 8px;border-bottom:1px solid ${t.border};align-items:center;cursor:pointer;transition:background .1s;font-size:11px}.lr:hover{background:${t.surfaceHover}}
+        .lr{display:grid;grid-template-columns:36px 2fr 1.2fr 56px 30px 30px 22px 22px 22px;gap:2px;padding:6px 8px;border-bottom:1px solid ${t.border};align-items:center;cursor:pointer;transition:background .1s;font-size:11px}.lr:hover{background:${t.surfaceHover}}
         .cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px}
         .float-panel{position:fixed;top:10px;right:10px;width:320px;max-height:calc(100vh - 20px);overflow-y:auto;z-index:50;border-radius:14px;animation:slideIn .25s ease}
-        @media(max-width:700px){.float-panel{position:fixed;bottom:0;right:0;left:0;top:auto;width:100%;max-height:55vh;border-radius:14px 14px 0 0}}
+        @media(max-width:700px){
+          .float-panel{position:fixed;bottom:0;right:0;left:0;top:auto;width:100%;max-height:55vh;border-radius:14px 14px 0 0}
+          .main-wrap{padding-left:14px!important;padding-right:14px!important}
+        }
       `}</style>
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1100, margin: "0 auto", padding: "32px 24px 48px" }}>
+      <div className="main-wrap" style={{ position: "relative", zIndex: 1, maxWidth: 1100, margin: "0 auto", padding: "32px 24px 48px" }}>
         {/* Header */}
         <div style={{ animation: ready ? "su .4s ease" : "none", opacity: ready ? 1 : 0, marginBottom: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -546,11 +554,11 @@ const toggleVisited = useCallback((id) => {
                   </div>
                   <p style={{ fontSize: 10.5, color: t.textMuted, marginTop: 2 }}>{locWithFlag(detail)}</p>
                 </div>
-                <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
-                  <button onClick={() => toggleWishlist(detail.id)} title={wishlist.includes(detail.id) ? "Remove from wishlist" : "Add to wishlist"} style={{ background: wishlist.includes(detail.id) ? t.wishlistBg : "none", border: wishlist.includes(detail.id) ? `1px solid ${t.wishlistBorder}` : "1px solid transparent", borderRadius: 6, color: wishlist.includes(detail.id) ? t.wishlist : t.textFaint, cursor: "pointer", fontSize: 12, padding: "2px 5px" }}>☆</button>
-                  <button onClick={() => toggleVisited(detail.id)} title={visited.includes(detail.id) ? "Mark as not visited" : "Mark as visited"} style={{ background: visited.includes(detail.id) ? t.visitedBg : "none", border: visited.includes(detail.id) ? `1px solid ${t.visitedBorder}` : "1px solid transparent", borderRadius: 6, color: visited.includes(detail.id) ? t.visited : t.textFaint, cursor: "pointer", fontSize: 12, padding: "2px 5px" }}>✓</button>
-                  <button onClick={() => toggleFav(detail.id)} style={{ background: "none", border: "none", color: favs.includes(detail.id) ? t.fav : t.textFaint, cursor: "pointer", fontSize: 15 }}>{favs.includes(detail.id) ? "♥" : "♡"}</button>
-                  <button onClick={() => setSelected(null)} style={{ background: "none", border: "none", color: t.textFaint, cursor: "pointer", fontSize: 13 }}>✕</button>
+                <div style={{ display: "flex", gap: 6, flexShrink: 0, alignItems: "center" }}>
+                  <button onClick={() => toggleWishlist(detail.id)} title={wishlist.includes(detail.id) ? "Remove from wishlist" : "Add to wishlist"} style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", background: wishlist.includes(detail.id) ? t.wishlistBg : t.surface, border: `1px solid ${wishlist.includes(detail.id) ? t.wishlistBorder : t.border}`, borderRadius: 7, color: wishlist.includes(detail.id) ? t.wishlist : t.textFaint, cursor: "pointer", fontSize: 13, padding: 0 }}>{wishlist.includes(detail.id) ? "★" : "☆"}</button>
+                  <button onClick={() => toggleVisited(detail.id)} title={visited.includes(detail.id) ? "Mark as not visited" : "Mark as visited"} style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", background: visited.includes(detail.id) ? t.visitedBg : t.surface, border: `1px solid ${visited.includes(detail.id) ? t.visitedBorder : t.border}`, borderRadius: 7, color: visited.includes(detail.id) ? t.visited : t.textFaint, cursor: "pointer", fontSize: 13, padding: 0, fontWeight: visited.includes(detail.id) ? 700 : 400 }}>✓</button>
+                  <button onClick={() => toggleFav(detail.id)} style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", background: favs.includes(detail.id) ? t.favBg : t.surface, border: `1px solid ${favs.includes(detail.id) ? `${t.fav}44` : t.border}`, borderRadius: 7, color: favs.includes(detail.id) ? t.fav : t.textFaint, cursor: "pointer", fontSize: 14, padding: 0 }}>{favs.includes(detail.id) ? "♥" : "♡"}</button>
+                  <button onClick={() => setSelected(null)} style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", background: t.surface, border: `1px solid ${t.border}`, borderRadius: 7, color: t.textMuted, cursor: "pointer", fontSize: 12, padding: 0 }}>✕</button>
                 </div>
               </div>
 
@@ -713,7 +721,7 @@ const toggleVisited = useCallback((id) => {
         {view === "list" && (
           <div style={{ animation: "fi .18s", borderRadius: 9, overflow: "hidden", border: `1px solid ${t.border}` }}>
             <div className="lr" style={{ fontSize: 7.5, color: t.textGhost, textTransform: "uppercase", letterSpacing: 1.2, cursor: "default" }}>
-              <span /><span>Building</span><span>Location</span><span>Height</span><span>Fl</span><span>Year</span><span /><span />
+              <span /><span>Building</span><span>Location</span><span>Height</span><span>Fl</span><span>Year</span><span /><span /><span />
             </div>
             {/* Skeleton rows */}
             {wd.loading && !filtered.length && Array.from({ length: 10 }).map((_, i) => (
@@ -724,6 +732,7 @@ const toggleVisited = useCallback((id) => {
                 <div style={{ height: 8, width: 30, borderRadius: 4, background: t.surface }} />
                 <div style={{ height: 8, width: 16, borderRadius: 4, background: t.surface }} />
                 <div style={{ height: 8, width: 24, borderRadius: 4, background: t.surface }} />
+                <span />
                 <span />
                 <span />
               </div>

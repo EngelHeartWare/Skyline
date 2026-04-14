@@ -1,8 +1,4 @@
-[[redirects]]
-  from = "/api/wikidata"
-  to = "https://query.wikidata.org/sparql"
-  status = 200
-  force = true
+# Wikidata proxy removed — app uses direct CORS fetch to query.wikidata.org
 
 [[redirects]]
   from = "/*"

@@ -4,32 +4,29 @@ const IMPRESSUM_CONTENT = `
 Angaben gemäß § 5 TMG
 
 Moritz Engelhardt
-EngelHeartWare (Nebengewerbe)
 Schachtstraße 10
 04155 Leipzig
 Deutschland
 
 Kontakt:
 E-Mail: moritzengelhardt@gmx.de
+Telefon: 015678 305322
 
-Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
+Umsatzsteuer
+Es besteht keine Umsatzsteuerpflicht gemäß § 19 UStG (Kleinunternehmerregelung), daher wird keine Umsatzsteuer-Identifikationsnummer geführt.
+
+Redaktionell Verantwortlicher
 Moritz Engelhardt
 Schachtstraße 10
 04155 Leipzig
+(§ 18 Abs. 2 MStV)
 
-Haftungsausschluss
+EU-Streitschlichtung
+Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr/
+Unsere E-Mail-Adresse finden Sie oben im Impressum.
 
-Haftung für Inhalte:
-Die Inhalte dieser Webseite wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-
-Haftung für Links:
-Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
-
-Urheberrecht:
-Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
-
-Gebäudedaten:
-Informationen zu Gebäuden stammen aus Wikidata und Wikipedia und unterliegen den jeweiligen Lizenzbestimmungen (CC BY-SA 3.0 bzw. CC0). Bilder stammen von Wikimedia Commons und unterliegen den dort angegebenen Lizenzen.
+Verbraucherstreitbeilegung / Universalschlichtungsstelle
+Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
 `.trim();
 
 const DATENSCHUTZ_CONTENT = `
@@ -39,99 +36,110 @@ Stand: April 2026
 
 1. Verantwortlicher
 
+Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) und anderer datenschutzrechtlicher Bestimmungen ist:
+
 Moritz Engelhardt
-EngelHeartWare (Nebengewerbe)
 Schachtstraße 10
 04155 Leipzig
 Deutschland
 E-Mail: moritzengelhardt@gmx.de
+Telefon: 015678 305322
 
-2. Übersicht der Datenverarbeitungen
+2. Datenschutz auf einen Blick
 
-Diese Webseite ermöglicht es Nutzern, Wolkenkratzer zu erkunden, zu bewerten und persönliche Listen (Favoriten, Besucht, Wunschliste) zu führen. Im Folgenden informieren wir Sie über die Verarbeitung personenbezogener Daten bei der Nutzung unserer Webseite.
+Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Ausführliche Informationen entnehmen Sie den nachfolgenden Abschnitten.
 
 3. Hosting (Netlify)
 
-Unsere Webseite wird bei Netlify, Inc. (San Francisco, USA) gehostet. Beim Aufrufen der Webseite werden automatisch Informationen an den Server übermittelt (Server-Logfiles), darunter:
+Diese Website wird extern bei Netlify (Netlify, Inc., 44 Montgomery Street, Suite 300, San Francisco, California 94104, USA) gehostet. Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es sich v. a. um IP-Adressen, Meta- und Kommunikationsdaten, Webseitenzugriffe und sonstige Daten handeln, die über eine Website generiert werden.
 
-- IP-Adresse
-- Datum und Uhrzeit der Anfrage
-- Browsertyp und -version
+Die Nutzung von Netlify erfolgt zum Zwecke einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen professionellen Anbieter (Art. 6 Abs. 1 lit. f DSGVO). Unser berechtigtes Interesse liegt in der zuverlässigen Darstellung unserer Website.
+
+Drittlandübermittlung: Netlify verarbeitet Daten auch in den USA. Netlify ist unter dem EU-US Data Privacy Framework (DPF) sowie der UK Extension zum EU-US DPF zertifiziert (siehe https://www.dataprivacyframework.gov/s). Die Datenübertragung in die USA erfolgt daher auf Grundlage dieses Angemessenheitsbeschlusses. Sollte das DPF für ungültig erklärt werden, greifen die EU-Standardvertragsklauseln (SCCs) als Rückfallmechanismus. Weitere Informationen: https://www.netlify.com/gdpr-ccpa/
+
+Auftragsverarbeitung: Netlify verarbeitet Daten in unserem Auftrag auf Grundlage eines Data Processing Agreements (DPA), das die Einhaltung der DSGVO sicherstellt.
+
+4. SSL- bzw. TLS-Verschlüsselung
+
+Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
+
+5. Datenerfassung auf dieser Website
+
+Server-Log-Dateien:
+Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt. Dies sind:
+- Browsertyp und Browserversion
+- Verwendetes Betriebssystem
 - Referrer URL
+- Hostname des zugreifenden Rechners
+- Uhrzeit der Serveranfrage
+- IP-Adresse
 
-Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der stabilen Bereitstellung der Webseite). Netlify verarbeitet Daten ggf. in den USA. Die Datenübermittlung erfolgt auf Basis von Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO).
+Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Laut Netlify-DPA werden Server-Log-Dateien bis zu 90 Tage online und bis zu 1 Jahr offline aufbewahrt.
 
-Weitere Informationen: https://www.netlify.com/privacy/
+Cookies und lokale Speicherung:
+Diese Website verwendet keine Cookies zu Tracking- oder Werbezwecken. Es werden keine Analyse-Tools eingesetzt. Die Web-App „Skyline Explorer" speichert Einstellungen und Authentifizierungs-Tokens von Supabase im localStorage Ihres Browsers (siehe Abschnitt 7). Die Portfolio-Website (engelheartware.netlify.app) verwendet weder Cookies noch localStorage.
 
-4. Benutzerkonten und Authentifizierung (Supabase)
+6. Externe Dienste und Inhalte
 
-Für die Nutzung personalisierter Funktionen (Favoriten, Besucht-Markierungen, Wunschliste) ist eine Registrierung erforderlich. Wir verwenden Supabase (Supabase Inc., San Francisco, USA) als Backend-Dienst. Dabei werden verarbeitet:
+Schriftarten:
+Diese Website verwendet ausschließlich lokal eingebundene Systemschriftarten. Es werden keine externen Schriftarten (z. B. Google Fonts) von Drittanbieter-Servern geladen. Es findet daher keine Datenübertragung an Dritte im Zusammenhang mit der Schriftdarstellung statt.
 
-- E-Mail-Adresse (für Registrierung und Login)
-- Passwort (gehasht gespeichert, nicht im Klartext)
-- Benutzer-ID (automatisch generiert)
-- Ihre Gebäudelisten (Favoriten, Besucht, Wunschliste) als Referenz-IDs
+GitHub:
+Diese Website enthält Links zu GitHub (GitHub, Inc., San Francisco, USA). Beim Anklicken werden Sie auf die Website von GitHub weitergeleitet, wobei die für den Seitenaufruf üblichen Daten (z. B. IP-Adresse) an GitHub übertragen werden. Datenschutzhinweise: https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement
 
-Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung). Supabase nutzt Amazon Web Services (AWS) als Infrastruktur. Die Datenverarbeitung erfolgt auf Servern in der EU (Frankfurt, wenn verfügbar) bzw. in den USA auf Basis von Standardvertragsklauseln.
+Ko-fi:
+Diese Website enthält einen Link zu Ko-fi (Ko-fi Labs Limited, UK). Beim Anklicken werden Sie auf die Website von Ko-fi weitergeleitet. Datenschutzhinweise: https://more.ko-fi.com/privacy
 
-Weitere Informationen: https://supabase.com/privacy
+Apple App Store:
+Diese Website enthält Links zum Apple App Store (Apple Inc., USA). Beim Anklicken werden Sie auf die Website von Apple weitergeleitet. Datenschutzhinweise: https://www.apple.com/legal/privacy/
 
-5. Lokale Datenspeicherung (localStorage)
+7. Unsere Apps
 
-Zusätzlich zur Cloud-Speicherung speichern wir Ihre Einstellungen und Listen lokal in Ihrem Browser (localStorage):
+Swipe In (iOS):
+Die App „Swipe In" speichert alle eingegebenen Daten (wie z. B. erfasste Zeiten, Aktivitäten, Orte und Einstellungen) ausschließlich lokal auf Ihrem Gerät mittels Core Data und UserDefaults. Wir (der Entwickler) haben zu keinem Zeitpunkt Zugriff auf diese Daten, lesen diese nicht aus und übertragen sie nicht an externe Server. Die App enthält keine Werbe-SDKs, Analyse-Frameworks oder Tracking-Bibliotheken Dritter. Wenn Sie die CSV-Export-Funktion nutzen, wird die Datei auf Ihrem Gerät erzeugt und über das iOS-Share-Sheet geteilt. Die Entscheidung, wohin Sie die Datei senden oder speichern, liegt ausschließlich bei Ihnen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).
 
-- Theme-Einstellung (hell/dunkel)
-- Favoritenliste, Besucht-Liste, Wunschliste (als Gebäude-IDs)
+Skyline Explorer (Web-App):
+Die Web-App „Skyline Explorer" wird ebenfalls über Netlify gehostet. Es gelten die unter Abschnitt 3 genannten Hinweise zum Hosting.
 
-Diese Daten verlassen Ihren Browser nicht, es sei denn, Sie nutzen die Cloud-Synchronisation. Sie können diese Daten jederzeit über die Browsereinstellungen löschen.
+Benutzerkonten und Authentifizierung (Supabase):
+Für die Nutzung personalisierter Funktionen (Favoriten, Besucht-Markierungen, Wunschliste) ist eine Registrierung erforderlich. Wir verwenden Supabase (Supabase Inc., San Francisco, USA) als Backend-Dienst. Dabei werden verarbeitet: E-Mail-Adresse (für Registrierung und Login), Passwort (gehasht gespeichert, nicht im Klartext), eine automatisch generierte Benutzer-ID sowie Ihre Gebäudelisten als Referenz-IDs. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung). Supabase nutzt Amazon Web Services (AWS) als Infrastruktur. Die Datenverarbeitung erfolgt auf Servern in der EU (Stockholm, Schweden). Weitere Informationen: https://supabase.com/privacy
 
-Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Funktionalität).
+Lokale Datenspeicherung (localStorage):
+Zusätzlich zur Cloud-Speicherung speichert die App Einstellungen und Listen lokal in Ihrem Browser (localStorage): Theme-Einstellung (hell/dunkel), Favoritenliste, Besucht-Liste und Wunschliste (als Gebäude-IDs). Diese Daten verlassen Ihren Browser nicht, es sei denn, Sie nutzen die Cloud-Synchronisation. Sie können diese Daten jederzeit über die Browsereinstellungen löschen. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Funktionalität).
 
-6. Externe APIs
+Externe APIs (Wikidata und Wikipedia):
+Beim Laden der App werden Gebäudedaten von Wikidata (query.wikidata.org) abgefragt. Für Gebäudebilder und Beschreibungen werden Daten von der Wikipedia-API (en.wikipedia.org) abgerufen. Bei beiden Diensten wird Ihre IP-Adresse an die Wikimedia Foundation übermittelt. Es handelt sich um öffentlich verfügbare Daten. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO. Weitere Informationen: https://foundation.wikimedia.org/wiki/Privacy_policy
 
-a) Wikidata (query.wikidata.org):
-Beim Laden der Seite werden Gebäudedaten von Wikidata abgefragt. Dabei wird Ihre IP-Adresse an die Wikimedia Foundation übermittelt. Es handelt sich um öffentlich verfügbare Daten.
+Kontolöschung:
+Sie können Ihr Benutzerkonto jederzeit löschen lassen. Senden Sie dazu eine E-Mail an die in Abschnitt 1 genannte Adresse. Alle mit Ihrem Konto verknüpften Daten (E-Mail, Gebäudelisten) werden daraufhin vollständig gelöscht.
 
-b) Wikipedia (en.wikipedia.org):
-Für Gebäudebilder und Beschreibungen werden Daten von der Wikipedia-API abgerufen. Auch hier wird Ihre IP-Adresse übermittelt.
+8. Ihre Rechte als betroffene Person
 
-Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Darstellung von Gebäudeinformationen).
+Im Rahmen der geltenden gesetzlichen Bestimmungen haben Sie folgende Rechte:
+- Recht auf Auskunft (Art. 15 DSGVO)
+- Recht auf Berichtigung (Art. 16 DSGVO)
+- Recht auf Löschung (Art. 17 DSGVO)
+- Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)
+- Recht auf Datenübertragbarkeit (Art. 20 DSGVO)
+- Recht auf Widerspruch (Art. 21 DSGVO)
 
-Weitere Informationen: https://foundation.wikimedia.org/wiki/Privacy_policy
+Zur Ausübung Ihrer Rechte wenden Sie sich bitte an die im Abschnitt 1 genannte Kontaktadresse.
 
-7. Keine Cookies, kein Tracking
+9. Beschwerderecht bei einer Aufsichtsbehörde
 
-Diese Webseite verwendet keine Cookies zu Tracking- oder Werbezwecken. Es werden keine Analyse-Tools (wie Google Analytics) eingesetzt. Die einzigen im Browser gespeicherten Daten sind die unter Punkt 5 beschriebenen localStorage-Einträge sowie von Supabase verwaltete Authentifizierungs-Tokens.
+Unbeschadet eines anderweitigen Rechtsbehelfs steht Ihnen das Recht auf Beschwerde bei einer Aufsichtsbehörde zu, wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten gegen die DSGVO verstößt (Art. 77 DSGVO).
 
-8. Ihre Rechte
-
-Sie haben gemäß DSGVO folgende Rechte:
-
-- Auskunft (Art. 15 DSGVO): Sie können Auskunft über Ihre gespeicherten Daten verlangen.
-- Berichtigung (Art. 16 DSGVO): Sie können die Berichtigung unrichtiger Daten verlangen.
-- Löschung (Art. 17 DSGVO): Sie können die Löschung Ihrer Daten verlangen. Bei Löschung Ihres Benutzerkontos werden alle zugehörigen Daten entfernt.
-- Einschränkung (Art. 18 DSGVO): Sie können die Einschränkung der Verarbeitung verlangen.
-- Datenübertragbarkeit (Art. 20 DSGVO): Sie können Ihre Daten über die Export-Funktion als JSON-Datei herunterladen.
-- Widerspruch (Art. 21 DSGVO): Sie können der Verarbeitung Ihrer Daten widersprechen.
-
-Zur Ausübung Ihrer Rechte wenden Sie sich an die oben genannte E-Mail-Adresse.
-
-9. Kontolöschung
-
-Sie können Ihr Benutzerkonto jederzeit löschen lassen. Senden Sie dazu eine E-Mail an die oben genannte Adresse. Alle mit Ihrem Konto verknüpften Daten (E-Mail, Gebäudelisten) werden daraufhin vollständig gelöscht.
-
-10. Beschwerderecht
-
-Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Die für Leipzig zuständige Aufsichtsbehörde ist:
-
-Sächsischer Datenschutzbeauftragter
+Die für uns zuständige Aufsichtsbehörde ist:
+Sächsischer Datenschutz- und Transparenzbeauftragter
 Devrientstraße 5
 01067 Dresden
-https://www.saechsdsb.de
+Telefon: +49 351 85471-101
+E-Mail: post@sdtb.sachsen.de
+Website: https://www.sdtb.sachsen.de
 
-11. Änderungen
+10. Aktualität dieser Datenschutzerklärung
 
-Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte Rechtslagen oder Änderungen des Dienstes anzupassen. Die aktuelle Version finden Sie stets auf dieser Seite.
+Diese Datenschutzerklärung ist aktuell gültig und hat den Stand April 2026. Durch die Weiterentwicklung unserer Website oder aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung anzupassen.
 `.trim();
 
 export default function LegalPage({ page, onClose }) {

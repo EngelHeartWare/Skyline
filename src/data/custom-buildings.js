@@ -142,11 +142,57 @@ export const CUSTOM_BUILDINGS = [
     lat: 55.7480, lng: 37.5371, color: "#8A90C0", wiki: "Mercury_City_Tower",
     status: "completed",
   },
-  {
+  /*{
     id: "custom_lakhta", name: "Lakhta Center", city: "Saint Petersburg", country: "Russia",
     height: 462, floors: 87, year: 2019, use: "Office", style: "Modern",
     lat: 59.9875, lng: 30.1781, color: "#6A80B8", wiki: "Lakhta_Center",
     architect: "RMJM", status: "completed",
+  },*/
+
+  // ── UNDER CONSTRUCTION — EUROPE ──
+  {
+    id: "custom_estrel_tower", name: "Estrel Tower", city: "Berlin", country: "Germany",
+    height: 176, floors: 45, year: 2026, use: "Hotel", style: "Modern",
+    lat: 52.4734, lng: 13.4588, color: "#7A90B8", wiki: "Estrel_Tower",
+    architect: "Barkow Leibinger", status: "under_construction",
+  },
+  {
+    id: "custom_elbtower", name: "Elbtower", city: "Hamburg", country: "Germany",
+    height: 245, floors: 64, year: null, use: "Mixed", style: "Modern",
+    lat: 53.535, lng: 10.026, color: "#6A88B0", wiki: "Elbtower",
+    architect: "David Chipperfield", status: "under_construction",
+  },
+  {
+    id: "custom_four_t1", name: "FOUR Frankfurt T1", city: "Frankfurt", country: "Germany",
+    height: 233, floors: 59, year: 2025, use: "Office", style: "Modern",
+    lat: 50.1135, lng: 8.6687, color: "#7898B8",
+    architect: "UNStudio / HPP", status: "under_construction",
+  },
+  {
+    id: "custom_four_t2", name: "FOUR Frankfurt T2", city: "Frankfurt", country: "Germany",
+    height: 178, floors: 48, year: 2025, use: "Residential", style: "Modern",
+    lat: 50.1134, lng: 8.6690, color: "#6890A8",
+    architect: "UNStudio / HPP", status: "under_construction",
+  },
+  {
+    id: "custom_dc_tower2", name: "DC Tower 2", city: "Vienna", country: "Austria",
+    height: 175, floors: 53, year: 2026, use: "Mixed", style: "Modern",
+    lat: 48.234, lng: 16.415, color: "#7A88C0", wiki: "DC_Towers",
+    architect: "Dominique Perrault", status: "under_construction",
+  },
+  {
+    id: "custom_baan_tower", name: "Baan Tower", city: "Rotterdam", country: "Netherlands",
+    height: 159, floors: 47, year: 2026, use: "Residential", style: "Modern",
+    lat: 51.92, lng: 4.48, color: "#6A98B0",
+    architect: "Powerhouse Company", status: "under_construction",
+  },
+
+  // ── PLANNED — EUROPE ──
+  {
+    id: "custom_rise_rotterdam", name: "RISE Rotterdam", city: "Rotterdam", country: "Netherlands",
+    height: 286, floors: 75, year: null, use: "Mixed", style: "Modern",
+    lat: 51.916, lng: 4.476, color: "#8090C0",
+    architect: "Powerhouse Company", status: "planned",
   },
 
   // Add your own below:
@@ -157,5 +203,30 @@ export const CUSTOM_BUILDINGS = [
  * Fix broken/missing photos by Wikidata QID or custom ID.
  */
 export const IMAGE_OVERRIDES = {
-  // "Q12495": "https://upload.wikimedia.org/.../Burj_Khalifa.jpg",
+  // Format: QID or custom_id → Commons Special:Redirect URL at 500px
+  // These fix buildings where both Wikipedia and P18 lookups fail
+
+  // Lotte World Tower — Seoul, 555m
+  "Q494895": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Lotte_World_Tower_-_20190630.jpg&width=500",
+
+  // Merdeka 118 — Kuala Lumpur, 678.9m
+  "Q7969454": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Merdeka_118_January_2024.jpg&width=500",
+
+  // Landmark 81 — Ho Chi Minh City, 461.2m
+  "Q19893768": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Landmark_81_20181.jpg&width=500",
+
+  // Lakhta Center — Saint Petersburg, 462m
+  "Q4255374": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Лахта_Центр._Вечер..jpg&width=500",
+
+  // International Commerce Centre — Hong Kong, 484m
+  "Q317034": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/International_Commerce_Centre_201008.jpg&width=500",
+
+  // Zifeng Tower — Nanjing, 450m
+  "Q382121": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Zifeng_Tower_2015.04.jpg&width=500",
+
+  // Changsha IFS Tower T1 — 452m
+  "Q5410187": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Changsha_IFS_Tower_T1.jpg&width=500",
+
+  // Ping An Finance Centre — Shenzhen, 599.1m
+  "Q830860": "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Ping_An_Finance_Centre_2020.jpg&width=500",
 };
